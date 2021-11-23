@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">uniConnect-auth</string>
+    <string name="app_name">uniConnect</string>
     <string name="sign_in">Sign In</string>
     <string name="or">or</string>
     <string name="create_account">Create Account</string>
