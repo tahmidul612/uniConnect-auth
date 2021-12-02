@@ -74,12 +74,12 @@ class CreateAccountActivity : AppCompatActivity() {
             firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        toast("created account successfully !")
+                        toast("created account successfully!")
                         sendEmailVerification()
                         startActivity(Intent(this, HomeActivity::class.java))
                         finish()
                     } else {
-                        toast("failed to Authenticate !")
+                        toast("failed to register")
                     }
                 }
         }

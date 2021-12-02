@@ -11,8 +11,6 @@ import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.firebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : AppCompatActivity() {
-    lateinit var signInEmail: String
-    lateinit var signInPassword: String
     lateinit var signInInputsArray: Array<EditText>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,13 +28,11 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun notEmpty(): Boolean = signInEmail.isNotEmpty() && signInPassword.isNotEmpty()
-
     private fun signInUser() {
-        signInEmail = etSignInEmail.text.toString().trim()
-        signInPassword = etSignInPassword.text.toString().trim()
+        val signInEmail = etSignInEmail.text.toString().trim()
+        val signInPassword = etSignInPassword.text.toString().trim()
 
-        if (notEmpty()) {
+        if (signInEmail.isNotEmpty() && signInPassword.isNotEmpty()) {
             firebaseAuth.signInWithEmailAndPassword(signInEmail, signInPassword)
                 .addOnCompleteListener { signIn ->
                     if (signIn.isSuccessful) {
