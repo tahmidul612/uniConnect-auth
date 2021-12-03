@@ -8,20 +8,35 @@ data class User(
     var self : DocumentReference,
     var email: String,
     var uid: String,
-    // should probably not do this, maybe List<DocumentReference> :(
-    var chatrooms : List<Chatroom> = emptyList()
+    var chatrooms : MutableList<Chatroom> = mutableListOf()
 ) {
+    /**
+     * create a new chatroom.
+     *
+     * @param other another user
+     */
     fun newChat(other : User) {
-        val chat = FirebaseUtils.db().collection("chatrooms").document()
+        val chat = FirebaseUtils.newChat()
 
-        chat.set(Chatroom(chat))
+        chat.addUser(this)
+        chat.addUser(other)
 
-        // add references in both users
-        this.self.update("chatrooms", FieldValue.arrayUnion(chat))
-        other.self.update("chatrooms", FieldValue.arrayUnion(chat))
     }
 
-    // simply writes any changes in this object to the database
+    /**
+     * leaves a chatroom
+     *
+     * @param chat the chatroom to leave
+     */
+    fun leaveChat(chat : Chatroom) {
+        chatrooms.remove(chat)
+        update()
+    }
+
+    /**
+     * updates this object in firestore
+     *
+     */
     fun update() {
         self.set(this)
     }
