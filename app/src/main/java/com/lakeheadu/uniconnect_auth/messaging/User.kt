@@ -12,7 +12,6 @@ data class User(
 ) {
     /**
      * create a new chatroom.
-     *
      * @param other another user
      */
     fun newChat(other : User) {
@@ -25,12 +24,21 @@ data class User(
 
     /**
      * leaves a chatroom
-     *
      * @param chat the chatroom to leave
      */
     fun leaveChat(chat : Chatroom) {
         chatrooms.remove(chat)
         update()
+    }
+
+    /**
+     * deletes this user account. also signs out
+     *
+     */
+    fun deleteAccount() {
+        self.delete()
+        FirebaseUtils.firebaseUser?.delete()
+        FirebaseUtils.signOut()
     }
 
     /**

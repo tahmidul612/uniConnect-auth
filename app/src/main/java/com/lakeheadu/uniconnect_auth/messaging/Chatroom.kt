@@ -6,6 +6,11 @@ import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 
 data class Chatroom(val self : DocumentReference) {
 
+    /**
+     * send a message to this chat
+     *
+     * @param str contents of message
+     */
     fun sendMessage(str : String) {
         FirebaseUtils.sendMessage(this, str)
     }
@@ -22,21 +27,13 @@ data class Chatroom(val self : DocumentReference) {
     }
 
     /**
-     * get all the messages for this chatroom. note that this returns a CollectionReference e.g.
-     * 
-     *  messages().addOnSnapshotListener { snapshot, e ->
-     *      if (snapshot != null && snapshot.exists()) {
-     *          val list = snapshot.toObjects<Message>()
-     *      }
-     *  }
+     * get all the messages for this chatroom. See FirebaseUtils.kt on how to use
+     * this return type
      *
-     * @return
+     * @return a CollectionReference to all the messages for this chatroom
      */
-    fun messages() : CollectionReference {
+    fun getMessages() : CollectionReference {
         return self.collection("messages")
     }
 
-    fun update() {
-        self.set(this)
-    }
 }
