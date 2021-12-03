@@ -4,11 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseUser
 import com.lakeheadu.uniconnect_auth.R
 import com.lakeheadu.uniconnect_auth.extensions.Extensions.toast
-import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.firebaseAuth
-import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.firebaseUser
+import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
+import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.register
 import kotlinx.android.synthetic.main.activity_create_account.*
 
 class CreateAccountActivity : AppCompatActivity() {
@@ -35,8 +34,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val user: FirebaseUser? = firebaseAuth.currentUser
-        user?.let {
+        if (FirebaseUtils.alreadyLoggedIn()) {
             startActivity(Intent(this, HomeActivity::class.java))
             toast("welcome back")
         }
@@ -71,17 +69,16 @@ class CreateAccountActivity : AppCompatActivity() {
             userPassword = etPassword.text.toString().trim()
 
             /*create a user*/
-            firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        toast("created account successfully !")
-                        sendEmailVerification()
-                        startActivity(Intent(this, HomeActivity::class.java))
-                        finish()
-                    } else {
-                        toast("failed to Authenticate !")
-                    }
+            register(userEmail, userPassword).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    toast("created account successfully!")
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    finish()
+                } else {
+                    toast("failed to register")
                 }
+            }
+
         }
     }
 
@@ -89,7 +86,7 @@ class CreateAccountActivity : AppCompatActivity() {
     *  work if the firebase user is not null.
     */
 
-    private fun sendEmailVerification() {
+    /*private fun sendEmailVerification() {
         firebaseUser?.let {
             it.sendEmailVerification().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -97,5 +94,5 @@ class CreateAccountActivity : AppCompatActivity() {
                 }
             }
         }
-    }
+    }*/
 }
