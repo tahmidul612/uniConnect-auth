@@ -6,7 +6,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.lakeheadu.uniconnect_auth.R
 import com.lakeheadu.uniconnect_auth.extensions.Extensions.toast
-import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.firebaseAuth
+import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.login
 /** fix missing imports **/
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
@@ -33,7 +33,7 @@ class SignInActivity : AppCompatActivity() {
         val signInPassword = etSignInPassword.text.toString().trim()
 
         if (signInEmail.isNotEmpty() && signInPassword.isNotEmpty()) {
-            firebaseAuth.signInWithEmailAndPassword(signInEmail, signInPassword)
+            login(signInEmail, signInPassword)
                 .addOnCompleteListener { signIn ->
                     if (signIn.isSuccessful) {
                         startActivity(Intent(this, HomeActivity::class.java))
