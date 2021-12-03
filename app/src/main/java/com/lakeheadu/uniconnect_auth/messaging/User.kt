@@ -8,6 +8,7 @@ data class User(
     var self : DocumentReference,
     var email: String,
     var uid: String,
+    // should probably not do this, maybe List<DocumentReference> :(
     var chatrooms : List<Chatroom> = emptyList()
 ) {
     fun newChat(other : User) {

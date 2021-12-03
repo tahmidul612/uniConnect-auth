@@ -4,8 +4,6 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
-import com.google.firebase.firestore.ktx.toObject
-import com.lakeheadu.uniconnect_auth.messaging.Chatroom
 import com.lakeheadu.uniconnect_auth.messaging.User
 
 
@@ -17,6 +15,7 @@ object FirebaseUtils {
         return FirebaseFirestore.getInstance()
     }
 
+    // similar to getCurrentUser
     fun getUser(uid : String) : Task<DocumentSnapshot> {
         return db().collection("users").document(uid).get()
     }
@@ -63,7 +62,7 @@ object FirebaseUtils {
 
                     val u = User(doc, email, it.uid)
 
-                    doc.set(u)
+                    u.update()
                 }
             }
         }
