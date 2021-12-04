@@ -1,11 +1,10 @@
 package com.lakeheadu.uniconnect_auth.messaging
 
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FieldValue
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 
 data class User(
-    var self : DocumentReference,
+    var docRef : DocumentReference,
     var email: String,
     var uid: String,
     var chatrooms : MutableList<Chatroom> = mutableListOf()
@@ -36,7 +35,7 @@ data class User(
      *
      */
     fun deleteAccount() {
-        self.delete()
+        docRef.delete()
         FirebaseUtils.firebaseUser?.delete()
         FirebaseUtils.signOut()
     }
@@ -46,6 +45,6 @@ data class User(
      *
      */
     fun update() {
-        self.set(this)
+        docRef.set(this)
     }
 }

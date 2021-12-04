@@ -59,9 +59,25 @@ import com.lakeheadu.uniconnect_auth.messaging.User
 object FirebaseUtils {
     val firebaseAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     var firebaseUser = firebaseAuth.currentUser
+    var user: User? = null
 
     private fun db(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
+    }
+
+    private fun update_user() {
+        firebaseUser = firebaseAuth.currentUser
+        val doc = getCurrentUserDoc()
+        doc.get().addOnSuccessListener {
+            user = it?.toObject<User>()
+        }
+        doc.addSnapshotListener { value, error ->
+
+            if (value != null && value.exists()) {
+                user = value.toObject<User>()
+            }
+        }
+
     }
 
     /**
@@ -71,7 +87,7 @@ object FirebaseUtils {
      * @param uid a user's uid
      * @return a DocumentReference
      */
-    fun getUser(uid : String) : DocumentReference {
+    private fun getUserDoc(uid: String): DocumentReference {
         return db().collection("users").document(uid)
     }
 
@@ -82,10 +98,9 @@ object FirebaseUtils {
      * @return a DocumentReference to the current user
      */
 
-    fun getCurrentUser() : DocumentReference {
-        return getUser(firebaseUser!!.uid)
+    fun getCurrentUserDoc(): DocumentReference {
+        return getUserDoc(firebaseUser!!.uid)
     }
-
 
     /**
      *  get a list of all users. note that you must call ".get()" on this object
@@ -93,7 +108,7 @@ object FirebaseUtils {
      *  on how to use this return type
      * @return an asynchronous CollectionReference, which can be turned into a list
      */
-    fun getAllUsers() : CollectionReference {
+    fun getAllUsers(): CollectionReference {
         return db().collection("users")
     }
 
@@ -103,12 +118,12 @@ object FirebaseUtils {
      * @param chat chatroom instance
      * @param msg message contents, in a string
      */
-    fun sendMessage(chat : Chatroom, msg : String) {
-        getCurrentUser().get().addOnSuccessListener {
+    fun sendMessage(chat: Chatroom, msg: String) {
+        getCurrentUserDoc().get().addOnSuccessListener {
             val user = it?.toObject<User>()
 
             // create our message
-            val m = Message(user!!.self, msg)
+            val m = Message(user!!.docRef, msg)
 
             chat.self.collection("messages").document().set(m)
         }
@@ -119,7 +134,7 @@ object FirebaseUtils {
      *
      * @return a new chatroom
      */
-    fun newChat() : Chatroom {
+    fun newChat(): Chatroom {
         val doc = db().collection("chatrooms").document()
 
         val ret = Chatroom(doc)
@@ -137,8 +152,7 @@ object FirebaseUtils {
      */
     fun login(email: String, password: String): Task<AuthResult> {
         val task = firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
-            // make sure to update firebaseUser
-            firebaseUser = firebaseAuth.currentUser
+            update_user()
         }
         return task
     }
@@ -171,13 +185,13 @@ object FirebaseUtils {
         return task
     }
 
-    /**
-     * checks if current user is already logged in.
+    /** checks if current user is already logged in.
      *
      * @return
      */
-    fun alreadyLoggedIn() : Boolean {
-        firebaseUser?.let{
+    fun alreadyLoggedIn(): Boolean {
+        firebaseUser?.let {
+            update_user()
             return true
         }
         return false
@@ -190,5 +204,7 @@ object FirebaseUtils {
     fun signOut() {
         firebaseAuth.signOut()
         firebaseUser = null
+        user = null
     }
+
 }
