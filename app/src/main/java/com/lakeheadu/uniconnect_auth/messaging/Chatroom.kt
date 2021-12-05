@@ -4,7 +4,12 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 
-data class Chatroom(val self : DocumentReference) {
+/**
+ * An object representing a chatroom.
+ *
+ * @property docRef Document Reference to this chatroom in Firestore.
+ */
+data class Chatroom(val docRef : DocumentReference) {
 
     /**
      * send a message to this chat
@@ -32,8 +37,8 @@ data class Chatroom(val self : DocumentReference) {
      *
      * @return a CollectionReference to all the messages for this chatroom
      */
-    fun getMessages() : CollectionReference {
-        return self.collection("messages")
+    fun getAllMessages() : CollectionReference {
+        return docRef.collection("messages")
     }
 
 }
