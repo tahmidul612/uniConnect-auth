@@ -20,6 +20,16 @@ data class Chatroom(val docRef : DocumentReference) {
         FirebaseUtils.sendMessage(this, str)
     }
 
+    fun inviteUser(sender : User, u : User) {
+        // create doc in user's request collection
+        val doc = u.docRef.collection("chat_requests").document()
+
+        val invite = chatRequest(doc, sender.docRef, this.docRef)
+
+        // write it to doc now
+        doc.set(invite)
+    }
+
     /**
      * kinda hackish, since a user should not be able to modify another user's object.
      * will think about better way to do this
