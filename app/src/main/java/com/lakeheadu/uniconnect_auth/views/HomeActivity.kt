@@ -12,12 +12,22 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-// sign out a user
-        btnSignOut.setOnClickListener {
-            FirebaseUtils.signOut()
+        if (!FirebaseUtils.alreadyLoggedIn()) {
             startActivity(Intent(this, CreateAccountActivity::class.java))
-            toast("signed out")
             finish()
+        }
+        else {
+            // sign out a user
+            btnSignOut.setOnClickListener {
+                FirebaseUtils.signOut()
+                startActivity(Intent(this, CreateAccountActivity::class.java))
+                toast("signed out")
+                finish()
+            }
+            newChat.setOnClickListener {
+                val newChatRoom = FirebaseUtils.newChat()
+                toast("send new message")
+            }
         }
     }
 }

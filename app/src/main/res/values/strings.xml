@@ -8,4 +8,6 @@
     <string name="email">email</string>
     <string name="sign_out">Sign Out</string>
     <string name="you_are_signed_in">You are signed in</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
