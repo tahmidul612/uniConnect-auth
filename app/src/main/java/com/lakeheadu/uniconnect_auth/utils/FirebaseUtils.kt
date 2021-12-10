@@ -106,6 +106,29 @@ import java.util.*
  *      getAllUsers().whereEqualTo("displayName", "John Smith").get().addOnSuccessListener {
  *          ...
  *      }
+ *--------------------------------------------------------------------------------------------------
+ *      // get list of all chatrooms for a user
+ *
+ *      val user
+ *
+ *      val tasks = mutableListOf<Task<DocumentSnapshot>>()
+ *
+ *       for (ref in user.chatrooms) {
+ *           val refTask = ref.get()
+ *           tasks.add(refTask)
+ *       }
+ *       Tasks.whenAllSuccess<DocumentSnapshot>(tasks).addOnSuccessListener {
+ *           val list = mutableListOf<Chatroom>()
+ *
+ *           for (result in it) {
+ *               result?.let { chat ->
+ *                   chat.toObject<Chatroom>()?.let { obj ->
+ *                       list.add(obj)
+ *                   }
+ *               }
+ *           }
+ *       }
+ *
  */
 
 object FirebaseUtils {

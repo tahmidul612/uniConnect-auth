@@ -36,7 +36,7 @@ data class Chatroom(val docRef : DocumentReference) {
      * @param u the user to add
      */
     fun addUser(u : User) {
-        u.chatrooms.add(this)
+        u.chatrooms.add(this.docRef)
         u.update()
     }
 

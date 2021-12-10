@@ -1,5 +1,6 @@
 package com.lakeheadu.uniconnect_auth.messaging
 
+
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.ktx.toObject
@@ -29,7 +30,7 @@ data class chatRequest(
 
 data class appointmentRequest(
     var docRef: DocumentReference,
-    var requester : DocumentReference,
+    var requester: DocumentReference,
     val requestDate: Date
 )
 
@@ -53,7 +54,7 @@ data class User(
     var userType: String = "",
     var department: String = "",
     var displayName: String = "",
-    var chatrooms: MutableList<Chatroom> = mutableListOf()
+    var chatrooms: MutableList<DocumentReference> = mutableListOf()
 ) {
 
     fun updateName(new_name: String) {
@@ -61,15 +62,14 @@ data class User(
         update()
     }
 
-    fun answerChatRequest(cr :chatRequest, accept : Boolean ) {
+    fun answerChatRequest(cr: chatRequest, accept: Boolean) {
         if (accept) {
             cr.chatDoc.get().addOnSuccessListener {
                 val chat = it?.toObject<Chatroom>()
                 chat?.addUser(this)
                 cr.docRef.delete()
             }
-        }
-        else {
+        } else {
             cr.docRef.delete()
         }
     }
@@ -91,9 +91,10 @@ data class User(
      * @param chat the chatroom to leave
      */
     fun leaveChat(chat: Chatroom) {
-        chatrooms.remove(chat)
+        chatrooms.remove(chat.docRef)
         update()
     }
+
 
     /**
      * get all new chat requests.
@@ -109,7 +110,7 @@ data class User(
      *
      * @return a CollectionReference (type list of appointmentRequests)
      */
-    fun getAppointmentRequests() : CollectionReference {
+    fun getAppointmentRequests(): CollectionReference {
         return this.docRef.collection("appointment_requests")
     }
 
