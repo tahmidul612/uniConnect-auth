@@ -5,9 +5,8 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.toObject
-import com.lakeheadu.uniconnect_auth.messaging.Chatroom
-import com.lakeheadu.uniconnect_auth.messaging.Message
-import com.lakeheadu.uniconnect_auth.messaging.User
+import com.lakeheadu.uniconnect_auth.messaging.*
+import java.util.*
 
 /** HOW TO USE THESE METHODS
  *
@@ -176,6 +175,28 @@ object FirebaseUtils {
         user?.let {
             val m = Message(it.docRef, msg)
             chat.getAllMessages().document().set(m)
+        }
+    }
+
+    fun inviteUserToChat(chat : Chatroom, u : User ) {
+        user?.let {
+            val doc = u.docRef.collection("chat_requests").document()
+
+            val invite = chatRequest(doc, it.docRef, chat.docRef)
+
+            // write it to doc now
+            doc.set(invite)
+        }
+
+    }
+
+    fun requestAppointment(u : User, time : Date) {
+        user?.let {
+            val doc = u.docRef.collection("appointment_requests").document()
+
+            val r = appointmentRequest(doc, u.docRef, time)
+
+            doc.set(r)
         }
     }
 

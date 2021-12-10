@@ -2,6 +2,7 @@ package com.lakeheadu.uniconnect_auth.messaging
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.ktx.toObject
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 import java.util.*
 
@@ -60,6 +61,18 @@ data class User(
         update()
     }
 
+    fun answerChatRequest(cr :chatRequest, accept : Boolean ) {
+        if (accept) {
+            cr.chatDoc.get().addOnSuccessListener {
+                val chat = it?.toObject<Chatroom>()
+                chat?.addUser(this)
+                cr.docRef.delete()
+            }
+        }
+        else {
+            cr.docRef.delete()
+        }
+    }
 
     /**
      * create a new chatroom.
@@ -82,10 +95,20 @@ data class User(
         update()
     }
 
+    /**
+     * get all new chat requests.
+     *
+     * @return a CollectionReference (type list of chatRequests)
+     */
     fun getChatRequests(): CollectionReference {
         return this.docRef.collection("chat_requests")
     }
 
+    /**
+     * get all appointment requests
+     *
+     * @return a CollectionReference (type list of appointmentRequests)
+     */
     fun getAppointmentRequests() : CollectionReference {
         return this.docRef.collection("appointment_requests")
     }
