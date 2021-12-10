@@ -18,15 +18,10 @@ class CreateAccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_account)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         createAccountInputsArray = arrayOf(etEmail, etPassword, etConfirmPassword)
-        btnCreateAccount.setOnClickListener {
+        btnCreateAccount2.setOnClickListener {
             signIn()
-        }
-
-        btnSignIn2.setOnClickListener {
-            startActivity(Intent(this, SignInActivity::class.java))
-            toast("please sign into your account")
-            finish()
         }
     }
 

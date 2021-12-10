@@ -12,12 +12,18 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-// sign out a user
+        if (!FirebaseUtils.alreadyLoggedIn()) {
+            startActivity(Intent(this, InitialLaunchActivity::class.java))
+            finish()
+        }
+        else {
+        // sign out a user
         btnSignOut.setOnClickListener {
             FirebaseUtils.signOut()
-            startActivity(Intent(this, CreateAccountActivity::class.java))
+            startActivity(Intent(this, InitialLaunchActivity::class.java))
             toast("signed out")
             finish()
+            }
         }
     }
 }
