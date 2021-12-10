@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.trimmedLength
 import com.lakeheadu.uniconnect_auth.R
 import com.lakeheadu.uniconnect_auth.extensions.Extensions.toast
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.login

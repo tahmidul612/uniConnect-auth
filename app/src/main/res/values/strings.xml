@@ -8,4 +8,6 @@
     <string name="email">email</string>
     <string name="sign_out">Sign Out</string>
     <string name="you_are_signed_in">You are signed in</string>
+    <string name="default_notification_channel_id">fcm_default_channel</string>
+    <string name="fcm_message">Example Message</string>
 </resources>
