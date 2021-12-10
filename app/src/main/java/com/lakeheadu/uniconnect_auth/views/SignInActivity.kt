@@ -38,10 +38,10 @@ class SignInActivity : AppCompatActivity() {
                 .addOnCompleteListener { signIn ->
                     if (signIn.isSuccessful) {
                         startActivity(Intent(this, HomeActivity::class.java))
-                        toast("signed in successfully")
+                        toast(getString(R.string.succenfult_signin_msg))
                         finish()
                     } else {
-                        toast("sign in failed")
+                        toast(getString(R.string.failed_signin_msg))
                     }
                 }
         } else {

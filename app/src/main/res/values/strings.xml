@@ -10,4 +10,6 @@
     <string name="you_are_signed_in">You are signed in</string>
     <string name="default_notification_channel_id">fcm_default_channel</string>
     <string name="fcm_message">Example Message</string>
+    <string name="succenfult_signin_msg">signed in successfully</string>
+    <string name="failed_signin_msg">sign in failed</string>
 </resources>
