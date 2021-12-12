@@ -153,7 +153,37 @@ import java.util.*
  *              }
  *          }
  *      }
- *
+ *--------------------------------------------------------------------------------------------------
+ *      // log all messages in every chat
+ *      FirebaseUtils.getCurrentUserDoc().get().addOnSuccessListener {
+            val tasks = mutableListOf<Task<DocumentSnapshot>>()
+
+            val user = it?.toObject<User>()
+
+            for (ref in user!!.chatrooms) {
+                val refTask = ref.get()
+                tasks.add(refTask)
+            }
+
+            Tasks.whenAllSuccess<DocumentSnapshot>(tasks).addOnSuccessListener { chatroomList ->
+
+                for (result in chatroomList) {
+                    val chatroom = result!!.toObject<Chatroom>()
+                    chatroom!!.getAllMessages().get().addOnSuccessListener { it ->
+                        it?.let {
+                            val msgs = it.toObjects<Message>()
+
+                            for (m in msgs) {
+                                // do the logging now
+                                Log.d("test", m.content)
+                            }
+
+                        }
+                    }
+
+                }
+            }
+        }
  */
 
 object FirebaseUtils {
