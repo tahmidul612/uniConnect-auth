@@ -14,32 +14,19 @@ import kotlinx.android.synthetic.main.chatrooms.view.*
 
 val list_of_chatrooms = mutableListOf<Chatroom>()
 
-class ChatroomsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ChatroomsAdapter(list: List<Chatroom>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
-        // fill list of chatrooms on creation
-        FirebaseUtils.getCurrentUserDoc().get().addOnSuccessListener {
-            val tasks = mutableListOf<Task<DocumentSnapshot>>()
-
-            val user = it?.toObject<User>()
-
-            for (ref in user!!.chatrooms) {
-                val refTask = ref.get()
-                tasks.add(refTask)
-            }
-
-            Tasks.whenAllSuccess<DocumentSnapshot>(tasks).addOnSuccessListener { list ->
-
-                for (result in list) {
-                    val chatroom = result!!.toObject<Chatroom>()
-                    list_of_chatrooms.add(chatroom!!)
-                }
-            }
+    init {
+        for (chat in list) {
+            list_of_chatrooms.add(chat)
         }
+    }
+
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         // listen for changes e.g. new chats, removed chats etc
         FirebaseUtils.getCurrentUserDoc().addSnapshotListener { value, error ->
