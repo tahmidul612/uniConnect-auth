@@ -14,12 +14,34 @@ import kotlinx.android.synthetic.main.chatrooms.view.*
 
 val list_of_chatrooms = mutableListOf<Chatroom>()
 
-class ChatroomsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class ChatroomsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        // fill list of chatrooms on creation
+        FirebaseUtils.getCurrentUserDoc().get().addOnSuccessListener {
+            val tasks = mutableListOf<Task<DocumentSnapshot>>()
+
+            val user = it?.toObject<User>()
+
+            for (ref in user!!.chatrooms) {
+                val refTask = ref.get()
+                tasks.add(refTask)
+            }
+
+            Tasks.whenAllSuccess<DocumentSnapshot>(tasks).addOnSuccessListener { list ->
+
+                for (result in list) {
+                    val chatroom = result!!.toObject<Chatroom>()
+                    list_of_chatrooms.add(chatroom!!)
+                }
+            }
+        }
+
+        // listen for changes e.g. new chats, removed chats etc
         FirebaseUtils.getCurrentUserDoc().addSnapshotListener { value, error ->
             if (value != null && value.exists()) {
                 val user = value.toObject<User>()
@@ -29,18 +51,19 @@ class ChatroomsAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     val refTask = ref.get()
                     tasks.add(refTask)
                 }
-                Tasks.whenAllSuccess<DocumentSnapshot>(tasks).addOnSuccessListener {
-                    for (result in it) {
-                        result?.let { chat ->
-                            chat.toObject<Chatroom>()?.let { obj ->
-                                list_of_chatrooms.add(obj)
-                            }
-                        }
+                Tasks.whenAllSuccess<DocumentSnapshot>(tasks).addOnSuccessListener { list ->
+                    // clear out old list
+                    list_of_chatrooms.clear()
+
+                    for (result in list) {
+                        val chatroom = result!!.toObject<Chatroom>()
+                        list_of_chatrooms.add(chatroom!!)
                     }
                 }
             }
         }
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.chatrooms, viewGroup, false)
+        val view =
+            LayoutInflater.from(viewGroup.context).inflate(R.layout.chatrooms, viewGroup, false)
         return ViewHolder(view)
     }
 

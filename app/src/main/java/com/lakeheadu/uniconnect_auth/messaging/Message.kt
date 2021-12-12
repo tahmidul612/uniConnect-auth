@@ -13,8 +13,8 @@ import java.util.*
  * @property timestamp timestamp of the message
  */
 data class Message(
-    val user : DocumentReference,
-    val content : String,
+    val user : DocumentReference? = null,
+    val content : String = "",
     @ServerTimestamp
     val timestamp : Date? = null
 )
