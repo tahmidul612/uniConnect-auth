@@ -128,6 +128,31 @@ import java.util.*
  *               }
  *           }
  *       }
+ *--------------------------------------------------------------------------------------------------
+ *
+ *      // listen for changes to chatrooms list
+ *      val list_of_chatrooms = mutableListOf<Chatrooms>()
+ *
+ *      FirebaseUtils.getCurrentUserDoc().addOnSnapshotListener {
+ *          if (value != null && value.exists()) {
+ *              val user = value.toObject<User>()
+ *              val tasks = mutableListOf<Task<DocumentSnapshot>>()
+ *
+ *              for (ref in user.chatrooms) {
+ *                  val refTask = ref.get()
+ *                  tasks.add(refTask)
+ *              }
+ *              Tasks.whenAllSuccess<DocumentSnapshot>(tasks).addOnSuccessListener {*
+ *                  for (result in it) {
+ *                      result?.let { chat ->
+ *                          chat.toObject<Chatroom>()?.let { obj ->
+ *                              list_of_chatrooms.add(obj)
+ *                          }
+ *                      }
+ *                  }
+ *              }
+ *          }
+ *      }
  *
  */
 
@@ -163,7 +188,6 @@ object FirebaseUtils {
      * @return a DocumentReference
      */
     private fun getUserDoc(uid: String): DocumentReference {
-        db().collection("test").whereEqualTo("displayName", "John Smith").get()
         return db().collection("users").document(uid)
     }
 
@@ -201,7 +225,7 @@ object FirebaseUtils {
         }
     }
 
-    fun inviteUserToChat(chat : Chatroom, u : User ) {
+    fun inviteUserToChat(chat: Chatroom, u: User) {
         user?.let {
             val doc = u.docRef.collection("chat_requests").document()
 
@@ -213,7 +237,8 @@ object FirebaseUtils {
 
     }
 
-    fun requestAppointment(u : User, time : Date) {
+
+    fun requestAppointment(u: User, time: Date) {
         user?.let {
             val doc = u.docRef.collection("appointment_requests").document()
 
@@ -228,13 +253,17 @@ object FirebaseUtils {
      *
      * @return a new chatroom
      */
-    fun newChat(): Chatroom {
-        val doc = db().collection("chatrooms").document()
+    fun newChat(other: User) {
+        user?.let {
+            val doc = db().collection("chatrooms").document()
 
-        val ret = Chatroom(doc)
-        doc.set(ret)
+            val chatroom = Chatroom(doc)
+            it.chatrooms.add(doc)
 
-        return ret
+            chatroom.inviteUser(other)
+
+
+        }
     }
 
     /**

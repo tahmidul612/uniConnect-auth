@@ -3,7 +3,6 @@ package com.lakeheadu.uniconnect_auth.messaging
 
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.ktx.toObject
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 import java.util.*
 
@@ -19,6 +18,7 @@ data class chatRequest(
     var requester: DocumentReference,
     var chatDoc: DocumentReference
 )
+
 
 /**
  * represents a request for an appointment with another user
@@ -56,34 +56,68 @@ data class User(
     var displayName: String = "",
     var chatrooms: MutableList<DocumentReference> = mutableListOf()
 ) {
-
+    /**
+     * updates the name of this user and writes to Firestore
+     *
+     * @param new_name new displayName of this user
+     */
     fun updateName(new_name: String) {
         displayName = new_name
         update()
     }
 
-    fun answerChatRequest(cr: chatRequest, accept: Boolean) {
-        if (accept) {
-            cr.chatDoc.get().addOnSuccessListener {
-                val chat = it?.toObject<Chatroom>()
-                chat?.addUser(this)
-                cr.docRef.delete()
-            }
-        } else {
-            cr.docRef.delete()
-        }
+    /**
+     * updates the department of this user and writes to Firestore
+     *
+     * @param new_dept new department of this user
+     */
+    fun updateDepartment(new_dept: String) {
+        department = new_dept
+        update()
     }
 
     /**
-     * create a new chatroom.
-     * @param other another user
+     * updates the userType of this user and writes it to Firestore
+     *
+     * @param new_type the new type
      */
-    fun newChat(other: User) {
-        val chat = FirebaseUtils.newChat()
-
-        chat.addUser(this)
-        chat.addUser(other)
+    fun updateUserType(new_type: String) {
+        userType = new_type
         update()
+    }
+
+    /**
+     * Answers a request to be added to a chat
+     *
+     * @param cr the chat request
+     * @param accept whether this user is accepting or not
+     */
+    fun answerChatRequest(cr: chatRequest, accept: Boolean) {
+        if (accept) {
+            chatrooms.add(cr.docRef)
+            update()
+
+        }
+        cr.docRef.delete()
+    }
+
+
+    /**
+     * create a new chatroom with this user.
+     *
+     */
+    fun newChat() {
+        FirebaseUtils.newChat(this)
+
+    }
+
+    /**
+     * request this user for an appointment
+     *
+     * @param date the date of this appointment
+     */
+    fun requestAppointment(date: Date) {
+        FirebaseUtils.requestAppointment(this, date)
     }
 
     /**
@@ -129,6 +163,7 @@ data class User(
      *
      */
     fun update() {
+
         docRef.set(this)
     }
 

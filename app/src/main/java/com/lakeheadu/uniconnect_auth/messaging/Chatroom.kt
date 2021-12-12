@@ -30,17 +30,6 @@ data class Chatroom(val docRef : DocumentReference) {
     }
 
     /**
-     * kinda hackish, since a user should not be able to modify another user's object.
-     * will think about better way to do this
-     *
-     * @param u the user to add
-     */
-    fun addUser(u : User) {
-        u.chatrooms.add(this.docRef)
-        u.update()
-    }
-
-    /**
      * get all the messages for this chatroom. See FirebaseUtils.kt on how to use
      * this return type
      *
