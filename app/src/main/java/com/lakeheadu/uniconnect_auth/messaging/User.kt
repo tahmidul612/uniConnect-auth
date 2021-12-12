@@ -5,6 +5,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 import java.util.*
+import kotlin.collections.HashMap
 
 /**
  * represents a request from user to another to join a chat
@@ -65,9 +66,9 @@ data class appointmentRequest(
  * @property chatrooms list of chatrooms which this user is a part of.
  */
 data class User(
-    var docRef: DocumentReference,
-    var email: String,
-    var uid: String,
+    var docRef: DocumentReference? = null,
+    var email: String = "",
+    var uid: String = "",
     // ideally userType is an enum, but firebase does not play well with enums
     var userType: String = "",
     var department: String = "",
@@ -138,7 +139,7 @@ data class User(
      * @return a CollectionReference (type list of chatRequests)
      */
     fun getChatRequests(): CollectionReference {
-        return this.docRef.collection("chat_requests")
+        return this.docRef!!.collection("chat_requests")
     }
 
     /**
@@ -147,7 +148,7 @@ data class User(
      * @return a CollectionReference (type list of appointmentRequests)
      */
     fun getAppointmentRequests(): CollectionReference {
-        return this.docRef.collection("appointment_requests")
+        return this.docRef!!.collection("appointment_requests")
     }
 
     /**
@@ -155,7 +156,7 @@ data class User(
      *
      */
     fun deleteAccount() {
-        docRef.delete()
+        docRef!!.delete()
         FirebaseUtils.firebaseUser?.delete()
         FirebaseUtils.signOut()
     }
@@ -165,8 +166,16 @@ data class User(
      *
      */
     fun update() {
-
-        docRef.set(this)
+        val map = hashMapOf(
+            "docRef" to docRef,
+            "email" to email,
+            "uid" to uid,
+            "userType" to userType,
+            "department" to department,
+            "displayName" to displayName,
+            "chatrooms" to chatrooms
+        )
+        docRef!!.set(map)
     }
 
 }

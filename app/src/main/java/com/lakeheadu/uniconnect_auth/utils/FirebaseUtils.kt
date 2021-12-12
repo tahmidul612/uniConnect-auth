@@ -165,11 +165,15 @@ object FirebaseUtils {
         return FirebaseFirestore.getInstance()
     }
 
-    private fun update_user() {
+    private fun update_user(): Task<DocumentSnapshot> {
         firebaseUser = firebaseAuth.currentUser
         val doc = getCurrentUserDoc()
-        doc.get().addOnSuccessListener {
-            user = it?.toObject<User>()
+        val task = doc.get()
+
+        task.addOnSuccessListener {
+            it?.let {
+                user = it.toObject<User>()
+            }
         }
         doc.addSnapshotListener { value, error ->
 
@@ -177,7 +181,7 @@ object FirebaseUtils {
                 user = value.toObject<User>()
             }
         }
-
+        return task
     }
 
     /**
@@ -220,16 +224,16 @@ object FirebaseUtils {
      */
     fun sendMessage(chat: Chatroom, msg: String) {
         user?.let {
-            val m = Message(it.docRef, msg)
+            val m = Message(it.docRef!!, msg)
             chat.getAllMessages().document().set(m)
         }
     }
 
     fun inviteUserToChat(chat: Chatroom, u: User) {
         user?.let {
-            val doc = u.docRef.collection("chat_requests").document()
+            val doc = u.docRef!!.collection("chat_requests").document()
 
-            val invite = chatRequest(doc, it.docRef, chat.docRef)
+            val invite = chatRequest(doc, it.docRef!!, chat.docRef)
 
             // write it to doc now
             doc.set(invite)
@@ -240,15 +244,15 @@ object FirebaseUtils {
 
     fun requestAppointment(u: User, time: Date) {
         user?.let {
-            val doc = u.docRef.collection("appointment_requests").document()
+            val doc = u.docRef!!.collection("appointment_requests").document()
 
-            val r = appointmentRequest(doc, u.docRef, time)
+            val r = appointmentRequest(doc, u.docRef!!, time)
 
             doc.set(r)
         }
     }
 
-    fun answerAppointmentRequest(req : appointmentRequest, accept : Boolean) {
+    fun answerAppointmentRequest(req: appointmentRequest, accept: Boolean) {
         user?.let {
             if (accept) {
                 /*  notify the sender somehow. ideas:
@@ -280,7 +284,7 @@ object FirebaseUtils {
         }
     }
 
-    fun answerChatRequest(req : chatRequest, accept : Boolean) {
+    fun answerChatRequest(req: chatRequest, accept: Boolean) {
         user?.let {
             if (accept) {
                 it.chatrooms.add(req.chatDoc)
@@ -315,21 +319,18 @@ object FirebaseUtils {
      */
     fun register(email: String, password: String): Task<AuthResult> {
         val task = firebaseAuth.createUserWithEmailAndPassword(email, password)
-        task.addOnCompleteListener {
-            login(
-                email,
-                password
-            ).addOnCompleteListener {
-                // we could use this to initialize more info in db e.g. name, major, etc
-                firebaseUser?.let {
-                    // do this kinda manually, so we can add reference after
-                    val doc = db().collection("users").document(it.uid)
+        task.addOnSuccessListener {
 
-                    val u = User(doc, email, it.uid)
 
-                    u.update()
-                }
-            }
+            firebaseUser = firebaseAuth.currentUser
+
+            val doc = db().collection("users").document(firebaseUser!!.uid)
+
+            val u = User(doc, email, firebaseUser!!.uid)
+            //doc.set("test")
+            u.update()
+
+
         }
         return task
     }

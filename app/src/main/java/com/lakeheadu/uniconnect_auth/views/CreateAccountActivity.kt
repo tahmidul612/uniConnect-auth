@@ -64,7 +64,7 @@ class CreateAccountActivity : AppCompatActivity() {
             userPassword = etPassword.text.toString().trim()
 
             /*create a user*/
-            register(userEmail, userPassword).addOnCompleteListener { task ->
+            FirebaseUtils.register(userEmail, userPassword).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     toast("created account successfully!")
                     startActivity(Intent(this, HomeActivity::class.java))
