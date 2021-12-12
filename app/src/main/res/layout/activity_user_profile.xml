@@ -123,14 +123,14 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="16dp"
-                android:hint="Email ID"
+                android:hint="Display Name"
                 android:textColorHint="#787276"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/til_last_name">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_email"
+                    android:id="@+id/et_displayname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
@@ -147,14 +147,14 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/et_hint_mobile_number"
+                android:hint="@string/et_department"
                 android:textColorHint="#787276"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/til_email">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_mobile_number"
+                    android:id="@+id/et_department"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="phone"

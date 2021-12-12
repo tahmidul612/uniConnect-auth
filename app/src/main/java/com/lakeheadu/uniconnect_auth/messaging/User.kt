@@ -5,7 +5,6 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 import java.util.*
-import kotlin.collections.HashMap
 
 /**
  * represents a request from user to another to join a chat
@@ -73,18 +72,28 @@ data class User(
     var userType: String = "",
     var department: String = "",
     var displayName: String = "",
-    var chatrooms: MutableList<DocumentReference> = mutableListOf()
+    var chatrooms: MutableList<DocumentReference> = mutableListOf(),
+    var firstName: String = "",
+    var lastName: String = "",
 ) {
-    var firstName: String = ""
-    var lastName: String =""
-    var gender: String =""
+
+
+    fun updateFirstName(new_name: String) {
+        firstName = new_name
+        update()
+    }
+
+    fun updateLastName(new_name: String) {
+        lastName = new_name
+        update()
+    }
 
     /**
      * updates the name of this user and writes to Firestore
      *
      * @param new_name new displayName of this user
      */
-    fun updateName(new_name: String) {
+    fun updateDisplayName(new_name: String) {
         displayName = new_name
         update()
     }
