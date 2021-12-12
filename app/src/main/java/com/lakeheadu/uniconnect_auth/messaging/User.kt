@@ -75,6 +75,10 @@ data class User(
     var displayName: String = "",
     var chatrooms: MutableList<DocumentReference> = mutableListOf()
 ) {
+    var firstName: String = ""
+    var lastName: String =""
+    var gender: String =""
+
     /**
      * updates the name of this user and writes to Firestore
      *

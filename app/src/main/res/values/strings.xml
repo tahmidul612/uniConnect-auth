@@ -22,5 +22,6 @@
     <string name="image_selection_failed">Image Selection Failed!</string>
     <string name="err_msg_enter_mobile_number">Please enter your mobile number.</string>
     <string name="msg_profile_update_success">Your profile is updated successfully!</string>
+
     <string name="welcome_to_uniconnect">Welcome to uniConnect</string>
 </resources>
