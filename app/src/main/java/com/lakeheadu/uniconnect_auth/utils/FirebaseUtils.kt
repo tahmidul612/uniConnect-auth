@@ -233,7 +233,7 @@ object FirebaseUtils {
         user?.let {
             val doc = u.docRef!!.collection("chat_requests").document()
 
-            val invite = chatRequest(doc, it.docRef!!, chat.docRef)
+            val invite = chatRequest(doc, it.docRef!!, chat.docRef!!)
 
             // write it to doc now
             doc.set(invite)

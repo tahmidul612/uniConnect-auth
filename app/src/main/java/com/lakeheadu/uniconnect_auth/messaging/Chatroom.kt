@@ -9,7 +9,7 @@ import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
  *
  * @property docRef Document Reference to this chatroom in Firestore.
  */
-data class Chatroom(val docRef : DocumentReference) {
+data class Chatroom(val docRef : DocumentReference? = null) {
 
     /**
      * send a message to this chat
@@ -36,7 +36,7 @@ data class Chatroom(val docRef : DocumentReference) {
      * @return a CollectionReference to all the messages for this chatroom
      */
     fun getAllMessages() : CollectionReference {
-        return docRef.collection("messages")
+        return docRef!!.collection("messages")
     }
 
 }
