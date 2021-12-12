@@ -18,7 +18,16 @@ data class chatRequest(
     var requester: DocumentReference,
     var chatDoc: DocumentReference
 )
-
+{
+    /**
+     * Answers a request to be added to a chat
+     *
+     * @param accept whether the current user accepts it or not
+     */
+    fun answerChatRequest(accept: Boolean) {
+        FirebaseUtils.answerChatRequest(this, accept)
+    }
+}
 
 /**
  * represents a request for an appointment with another user
@@ -33,7 +42,16 @@ data class appointmentRequest(
     var requester: DocumentReference,
     val requestDate: Date
 )
-
+{
+    /**
+     * answers a request for an appointment
+     *
+     * @param accept whether the current user accepts it or not
+     */
+    fun answerAppointmentRequest(accept : Boolean) {
+        FirebaseUtils.answerAppointmentRequest(this, accept)
+    }
+}
 /**
  * An object representing a user.
  *
@@ -85,22 +103,6 @@ data class User(
         userType = new_type
         update()
     }
-
-    /**
-     * Answers a request to be added to a chat
-     *
-     * @param cr the chat request
-     * @param accept whether this user is accepting or not
-     */
-    fun answerChatRequest(cr: chatRequest, accept: Boolean) {
-        if (accept) {
-            chatrooms.add(cr.docRef)
-            update()
-
-        }
-        cr.docRef.delete()
-    }
-
 
     /**
      * create a new chatroom with this user.

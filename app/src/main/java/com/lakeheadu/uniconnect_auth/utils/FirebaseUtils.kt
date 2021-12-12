@@ -142,7 +142,7 @@ import java.util.*
  *                  val refTask = ref.get()
  *                  tasks.add(refTask)
  *              }
- *              Tasks.whenAllSuccess<DocumentSnapshot>(tasks).addOnSuccessListener {*
+ *              Tasks.whenAllSuccess<DocumentSnapshot>(tasks).addOnSuccessListener {
  *                  for (result in it) {
  *                      result?.let { chat ->
  *                          chat.toObject<Chatroom>()?.let { obj ->
@@ -248,6 +248,20 @@ object FirebaseUtils {
         }
     }
 
+    fun answerAppointmentRequest(req : appointmentRequest, accept : Boolean) {
+        user?.let {
+            if (accept) {
+                /*  notify the sender somehow. ideas:
+                        sender has collection "appointments", which is passed in appointmentRequest
+                        that contains result
+                        some more global collection of all appointments
+                        writing to collection of sender "appointmentAnswers" or something similar
+                 */
+
+            }
+        }
+    }
+
     /**
      * create a new Chatroom object.
      *
@@ -266,6 +280,17 @@ object FirebaseUtils {
         }
     }
 
+    fun answerChatRequest(req : chatRequest, accept : Boolean) {
+        user?.let {
+            if (accept) {
+                it.chatrooms.add(req.chatDoc)
+                it.update()
+            }
+            // delete the request now
+            req.docRef.delete()
+        }
+    }
+
     /**
      * login feature
      *
@@ -275,6 +300,7 @@ object FirebaseUtils {
      */
     fun login(email: String, password: String): Task<AuthResult> {
         val task = firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
+            // update FirebaseUtil's data for current user
             update_user()
         }
         return task
