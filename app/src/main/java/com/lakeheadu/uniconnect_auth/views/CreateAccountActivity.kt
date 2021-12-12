@@ -11,8 +11,6 @@ import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.register
 import kotlinx.android.synthetic.main.activity_create_account.*
 
 class CreateAccountActivity : AppCompatActivity() {
-    lateinit var userEmail: String
-    lateinit var userPassword: String
     lateinit var createAccountInputsArray: Array<EditText>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,17 +19,25 @@ class CreateAccountActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         createAccountInputsArray = arrayOf(etEmail, etPassword, etConfirmPassword)
         btnCreateAccount2.setOnClickListener {
-            signIn()
+            signup()
         }
     }
 
-    /* check if there's a signed-in user*/
-
-    override fun onStart() {
-        super.onStart()
-        if (FirebaseUtils.alreadyLoggedIn()) {
-            startActivity(Intent(this, HomeActivity::class.java))
-            toast("welcome back")
+    private fun signup() {
+        val userEmail = etEmail.text.toString().trim()
+        val userPassword = etPassword.text.toString().trim()
+        if (identicalPassword()) {
+            register(userEmail, userPassword)
+                .addOnCompleteListener { signup ->
+                    if (signup.isSuccessful) {
+                        startActivity(Intent(this, HomeActivity::class.java))
+                        toast("registered successfully")
+                        finish()
+                    }
+                    else {
+                        toast("registration failed")
+                    }
+                }
         }
     }
 
@@ -57,25 +63,6 @@ class CreateAccountActivity : AppCompatActivity() {
         return identical
     }
 
-    private fun signIn() {
-        if (identicalPassword()) {
-            // identicalPassword() returns true only  when inputs are not empty and passwords are identical
-            userEmail = etEmail.text.toString().trim()
-            userPassword = etPassword.text.toString().trim()
-
-            /*create a user*/
-            register(userEmail, userPassword).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    toast("created account successfully!")
-                    startActivity(Intent(this, HomeActivity::class.java))
-                    finish()
-                } else {
-                    toast("failed to register")
-                }
-            }
-
-        }
-    }
 
     /* send verification email to the new user. This will only
     *  work if the firebase user is not null.
