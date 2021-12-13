@@ -12,7 +12,6 @@
     <dimen name="gender_radio_button_stroke_width">1dp</dimen>
 
 
-
     <dimen name="header_image_height">200dp</dimen>
     <dimen name="settings_user_image_size">150dp</dimen>
     <dimen name="settings_user_image_marginTop">-75dp</dimen>
@@ -49,6 +48,7 @@
 
     <dimen name="btn_textSize">18sp</dimen>
     <dimen name="btn_padding">8dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
 
 </resources>
