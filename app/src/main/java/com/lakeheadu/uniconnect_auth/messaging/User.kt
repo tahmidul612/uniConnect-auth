@@ -178,7 +178,9 @@ data class User(
             "userType" to userType,
             "department" to department,
             "displayName" to displayName,
-            "chatrooms" to chatrooms
+            "chatrooms" to chatrooms,
+            "firstName" to firstName,
+            "lastName" to lastName
         )
         docRef!!.set(map)
     }

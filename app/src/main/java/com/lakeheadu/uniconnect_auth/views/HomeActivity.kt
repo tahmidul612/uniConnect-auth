@@ -27,6 +27,18 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, InitialLaunchActivity::class.java))
             finish()
         } else {
+
+            /*  test requesting for new chat, might not work since this gets called fast and
+                FirebaseUtil.user must be updated in time
+            val doc = FirebaseUtils.getUserDoc("m6maUKuk19M5NlddsCkZQAdzMek2")
+
+            doc.get().addOnSuccessListener { u ->
+                val other = u.toObject<User>()
+
+                other?.newChat()
+            }*/
+
+
             // get all the chatrooms to pass to recycler view
             FirebaseUtils.getCurrentUserDoc().get().addOnSuccessListener {
                 it?.let {

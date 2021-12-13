@@ -1,5 +1,6 @@
 package com.lakeheadu.uniconnect_auth.messaging
 
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
@@ -35,8 +36,16 @@ data class Chatroom(val docRef : DocumentReference? = null) {
      *
      * @return a CollectionReference to all the messages for this chatroom
      */
-    fun getAllMessages() : CollectionReference {
+    fun getAllMessages(): CollectionReference {
         return docRef!!.collection("messages")
+    }
+
+    fun update(): Task<Void> {
+        val map = hashMapOf(
+            "docRef" to docRef
+        )
+
+        return this.docRef!!.set(map)
     }
 
 }

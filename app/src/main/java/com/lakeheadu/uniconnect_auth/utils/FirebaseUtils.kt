@@ -3,7 +3,10 @@ package com.lakeheadu.uniconnect_auth.utils
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.*
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import com.lakeheadu.uniconnect_auth.messaging.*
 import java.util.*
@@ -221,7 +224,7 @@ object FirebaseUtils {
      * @param uid a user's uid
      * @return a DocumentReference
      */
-    private fun getUserDoc(uid: String): DocumentReference {
+    fun getUserDoc(uid: String): DocumentReference {
         return db().collection("users").document(uid)
     }
 
@@ -306,10 +309,14 @@ object FirebaseUtils {
             val doc = db().collection("chatrooms").document()
 
             val chatroom = Chatroom(doc)
-            it.chatrooms.add(doc)
 
-            chatroom.inviteUser(other)
+            chatroom.update().addOnSuccessListener { void ->
+                it.chatrooms.add(doc)
 
+                inviteUserToChat(chatroom, other)
+
+                it.update()
+            }
 
         }
     }
