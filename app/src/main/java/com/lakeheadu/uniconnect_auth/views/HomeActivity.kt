@@ -14,10 +14,8 @@ import com.lakeheadu.uniconnect_auth.messaging.Chatroom
 import com.lakeheadu.uniconnect_auth.messaging.ChatroomsAdapter
 import com.lakeheadu.uniconnect_auth.messaging.User
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
+import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.signOut
 import kotlinx.android.synthetic.main.activity_home.*
-
-private lateinit var layoutManager: RecyclerView.LayoutManager
-private lateinit var adapter: ChatroomsAdapter
 
 /**
  * The home screen of the app
@@ -29,6 +27,10 @@ private lateinit var adapter: ChatroomsAdapter
  */
 
 class HomeActivity : AppCompatActivity() {
+
+    private lateinit var layoutManager: RecyclerView.LayoutManager
+    private lateinit var adapter: ChatroomsAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -76,6 +78,11 @@ class HomeActivity : AppCompatActivity() {
             newChat.setOnClickListener {
                 supportFragmentManager.beginTransaction()
                     .add(R.id.userlist, NewChatUserList()).commit()
+            }
+            btnSignOut.setOnClickListener {
+                signOut()
+                startActivity(Intent(this, InitialLaunchActivity::class.java))
+                finish()
             }
         }
     }

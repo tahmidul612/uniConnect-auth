@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_new_chat_user_list_list.*
 
 /**
  * A fragment representing a list of Items.
+ * @author tahmidul
  */
 class NewChatUserList : Fragment() {
 

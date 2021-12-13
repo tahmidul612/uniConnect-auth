@@ -197,7 +197,7 @@ import java.util.*
  * @author craig
  */
 object FirebaseUtils {
-    val firebaseAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val firebaseAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     var firebaseUser = firebaseAuth.currentUser
     var user: User? = null
 
@@ -205,7 +205,7 @@ object FirebaseUtils {
         return FirebaseFirestore.getInstance()
     }
 
-    private fun update_user(): Task<DocumentSnapshot> {
+    private fun updateUser(): Task<DocumentSnapshot> {
         firebaseUser = firebaseAuth.currentUser
         val doc = getCurrentUserDoc()
         val task = doc.get()
@@ -349,7 +349,7 @@ object FirebaseUtils {
     fun login(email: String, password: String): Task<AuthResult> {
         val task = firebaseAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener {
             // update FirebaseUtil's data for current user
-            update_user()
+            updateUser()
         }
         return task
     }
@@ -385,7 +385,7 @@ object FirebaseUtils {
      */
     fun alreadyLoggedIn(): Boolean {
         firebaseUser?.let {
-            update_user()
+            updateUser()
             return true
         }
         return false

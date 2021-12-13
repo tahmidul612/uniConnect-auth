@@ -18,11 +18,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/new_chat"
         android:contentDescription="new chat"
-        android:layout_margin="16dp" />
+        android:layout_margin="20dp" />
     <androidx.fragment.app.FragmentContainerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <Button
+        android:id="@+id/btnSignOut"
+        android:text="@string/sign_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

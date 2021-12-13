@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_create_account.*
  */
 
 class CreateAccountActivity : AppCompatActivity() {
-    lateinit var createAccountInputsArray: Array<EditText>
+    private lateinit var createAccountInputsArray: Array<EditText>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

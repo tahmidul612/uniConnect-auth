@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.chatrooms.view.*
  * @author tahmidul, craig
  */
 
-val list_of_chatrooms = mutableListOf<Chatroom>()
 
 class ChatroomsAdapter(list: List<Chatroom>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -32,9 +31,11 @@ class ChatroomsAdapter(list: List<Chatroom>) :
 
     }
 
+    private val chatroomsList = mutableListOf<Chatroom>()
+
     init {
         for (chat in list) {
-            list_of_chatrooms.add(chat)
+            chatroomsList.add(chat)
         }
     }
 
@@ -52,11 +53,11 @@ class ChatroomsAdapter(list: List<Chatroom>) :
                 }
                 Tasks.whenAllSuccess<DocumentSnapshot>(tasks).addOnSuccessListener { list ->
                     // clear out old list
-                    list_of_chatrooms.clear()
+                    chatroomsList.clear()
 
                     for (result in list) {
                         val chatroom = result!!.toObject<Chatroom>()
-                        list_of_chatrooms.add(chatroom!!)
+                        chatroomsList.add(chatroom!!)
                     }
                 }
             }
@@ -68,7 +69,7 @@ class ChatroomsAdapter(list: List<Chatroom>) :
 
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val cardView = viewHolder.itemView
-        val item = list_of_chatrooms[position]
+        val item = chatroomsList[position]
         var latestMsg : Message
         var sender : User
         item.getAllMessages().orderBy("timestamp", Query.Direction.ASCENDING).limitToLast(1).addSnapshotListener { value, error ->
@@ -85,7 +86,7 @@ class ChatroomsAdapter(list: List<Chatroom>) :
     }
 
     override fun getItemCount(): Int {
-        return list_of_chatrooms.count()
+        return chatroomsList.count()
     }
 }
 
