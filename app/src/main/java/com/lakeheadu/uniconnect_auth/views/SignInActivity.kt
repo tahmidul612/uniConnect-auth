@@ -11,12 +11,13 @@ import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.login
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 /**
- * this file implemented by Tahmidul
- *
+ * Verify the email and password input by the user with
+ * data from the Firebase Database and login the user
+ * @author tahmidul
  */
 
 class SignInActivity : AppCompatActivity() {
-    lateinit var signInInputsArray: Array<EditText>
+    private lateinit var signInInputsArray: Array<EditText>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

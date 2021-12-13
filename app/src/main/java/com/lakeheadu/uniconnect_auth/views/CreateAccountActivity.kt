@@ -10,8 +10,9 @@ import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.register
 import kotlinx.android.synthetic.main.activity_create_account.*
 
 /**
- * this file implemented by Tahmidul
- *
+ * Register the email and password input by the user
+ * to Firebase Database
+ * @author tahmidul
  */
 
 class CreateAccountActivity : AppCompatActivity() {

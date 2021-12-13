@@ -11,6 +11,12 @@ import kotlinx.android.synthetic.main.activity_initial_launch.*
  *
  */
 
+/**
+ * Activity launched for new or logged out users
+ * User can choose to sign up or sign in
+ * @author tahmidul
+ */
+
 class InitialLaunchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

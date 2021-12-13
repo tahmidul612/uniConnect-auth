@@ -20,8 +20,12 @@ private lateinit var layoutManager: RecyclerView.LayoutManager
 private lateinit var adapter: ChatroomsAdapter
 
 /**
- * this file implemented by Tahmidul, with help from Craig
+ * The home screen of the app
+ * Displays a RecyclerView list of the email address of
+ * the sender and the latest text in each chatroom
  *
+ * this file implemented by Tahmidul, with help from Craig
+ * @author tahmidul, craig
  */
 
 class HomeActivity : AppCompatActivity() {

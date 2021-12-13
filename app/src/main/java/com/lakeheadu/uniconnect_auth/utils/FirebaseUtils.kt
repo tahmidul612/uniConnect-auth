@@ -193,6 +193,9 @@ import java.util.*
         }
  */
 
+/**
+ * @author craig
+ */
 object FirebaseUtils {
     val firebaseAuth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     var firebaseUser = firebaseAuth.currentUser

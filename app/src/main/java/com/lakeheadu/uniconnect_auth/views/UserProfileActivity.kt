@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_user_profile.*
 
 /**
  * this file implemented by Rakshit, with some fixes from Craig
- *
+ * @author rakshit, craig
  */
 
 class UserProfileActivity : AppCompatActivity() {

@@ -13,6 +13,7 @@ import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
  * An object representing a chatroom.
  *
  * @property docRef Document Reference to this chatroom in Firestore.
+ * @author craig
  */
 data class Chatroom(val docRef: DocumentReference? = null) {
 

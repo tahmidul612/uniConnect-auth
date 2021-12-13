@@ -15,6 +15,7 @@ import java.util.*
  * @property user DocumentReference to the author
  * @property content content of message
  * @property timestamp timestamp of the message
+ * @author craig
  */
 data class Message(
     val user: DocumentReference? = null,

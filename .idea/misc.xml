@@ -3,10 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/tahmi/AndroidStudioProjects/uniConnect-auth/app/src/main/res/drawable/drawable_gender_tab_selector.xml" value="0.1" />
         <entry key="..\:/Users/tahmi/AndroidStudioProjects/uniConnect-auth/app/src/main/res/layout/activity_create_account.xml" value="0.1" />
         <entry key="..\:/Users/tahmi/AndroidStudioProjects/uniConnect-auth/app/src/main/res/layout/activity_home.xml" value="0.1" />
+        <entry key="..\:/Users/tahmi/AndroidStudioProjects/uniConnect-auth/app/src/main/res/layout/activity_initial_launch.xml" value="0.1" />
         <entry key="..\:/Users/tahmi/AndroidStudioProjects/uniConnect-auth/app/src/main/res/layout/activity_sign_in.xml" value="0.1" />
         <entry key="..\:/Users/tahmi/AndroidStudioProjects/uniConnect-auth/app/src/main/res/layout/activity_user_profile.xml" value="0.1" />
+        <entry key="..\:/Users/tahmi/AndroidStudioProjects/uniConnect-auth/app/src/main/res/layout/chatrooms.xml" value="0.1" />
         <entry key="..\:/Users/tahmi/AndroidStudioProjects/uniConnect-auth/app/src/main/res/layout/person.xml" value="0.1" />
         <entry key="..\:/uniConnect-auth/app/src/main/res/drawable/drawable_gender_tab_selector.xml" value="0.25416666666666665" />
         <entry key="..\:/uniConnect-auth/app/src/main/res/drawable/drawable_gender_tab_text_color_selector.xml" value="0.1" />

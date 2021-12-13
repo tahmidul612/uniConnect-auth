@@ -16,6 +16,7 @@ import java.util.*
  * @property docRef Self-referential document reference (type chatRequest)
  * @property requester User who requested (type User)
  * @property chatDoc reference to the chat (type Chatroom)
+ * @author craig
  */
 data class chatRequest(
     var docRef: DocumentReference,

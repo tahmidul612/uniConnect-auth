@@ -16,6 +16,12 @@ import kotlinx.android.synthetic.main.chatrooms.view.*
  *  this file implemented by Tahmidul, which some help from Craig
  */
 
+/**
+ * Adapter to populate RecyclerView list with information from
+ * all open chatrooms
+ * @author tahmidul, craig
+ */
+
 val list_of_chatrooms = mutableListOf<Chatroom>()
 
 class ChatroomsAdapter(list: List<Chatroom>) :
