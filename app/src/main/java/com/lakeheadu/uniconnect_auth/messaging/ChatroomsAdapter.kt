@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.lakeheadu.uniconnect_auth.R
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 import kotlinx.android.synthetic.main.chatrooms.view.*
@@ -67,7 +69,19 @@ class ChatroomsAdapter(list: List<Chatroom>) :
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         val cardView = viewHolder.itemView
         val item = list_of_chatrooms[position]
-        cardView.textView1.text = item.toString()
+        var latestMsg : Message
+        var sender : User
+        item.getAllMessages().orderBy("timestamp", Query.Direction.ASCENDING).limitToLast(1).addSnapshotListener { value, error ->
+            if (value != null && !value.isEmpty) {
+                latestMsg = value.toObjects<Message>()[0]
+                latestMsg.user!!.get().addOnSuccessListener { value ->
+                    sender = value.toObject<User>()!!
+                    cardView.chatRoomCardUser.text =  sender.email
+                }
+                cardView.chatRoomCardLatestMsg.text = latestMsg.content
+            }
+        }
+
     }
 
     override fun getItemCount(): Int {

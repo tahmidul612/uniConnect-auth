@@ -6,10 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.lakeheadu.uniconnect_auth.R
 import kotlinx.android.synthetic.main.activity_initial_launch.*
 
-/**
- * this file implemented by Tahmidul
- *
- */
 
 /**
  * Activity launched for new or logged out users

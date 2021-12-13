@@ -73,6 +73,10 @@ class HomeActivity : AppCompatActivity() {
                 }
 
             }
+            newChat.setOnClickListener {
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.userlist, NewChatUserList()).commit()
+            }
         }
     }
 
