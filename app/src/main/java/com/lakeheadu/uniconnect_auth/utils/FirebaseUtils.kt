@@ -11,6 +11,10 @@ import com.google.firebase.firestore.ktx.toObject
 import com.lakeheadu.uniconnect_auth.messaging.*
 import java.util.*
 
+/**
+ *  this file implemented by Craig
+ */
+
 /** HOW TO USE THESE METHODS
  *
  *  In firebase, we have two main ideas: documents and collections. A collection is a collection

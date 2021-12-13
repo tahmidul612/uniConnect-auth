@@ -3,6 +3,9 @@ package com.lakeheadu.uniconnect_auth.extensions
 import android.app.Activity
 import android.widget.Toast
 
+/**
+ * this file implemented by Tahmidul
+ */
 object Extensions {
     fun Activity.toast(msg: String){
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

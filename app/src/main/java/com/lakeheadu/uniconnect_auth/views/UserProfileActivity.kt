@@ -6,6 +6,11 @@ import com.lakeheadu.uniconnect_auth.R
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 import kotlinx.android.synthetic.main.activity_user_profile.*
 
+/**
+ * this file implemented by Rakshit, with some fixes from Craig
+ *
+ */
+
 class UserProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

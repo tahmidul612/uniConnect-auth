@@ -19,6 +19,11 @@ import kotlinx.android.synthetic.main.activity_home.*
 private lateinit var layoutManager: RecyclerView.LayoutManager
 private lateinit var adapter: ChatroomsAdapter
 
+/**
+ * this file implemented by Tahmidul, with help from Craig
+ *
+ */
+
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

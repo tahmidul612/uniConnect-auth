@@ -6,9 +6,13 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.lakeheadu.uniconnect_auth.R
 import com.lakeheadu.uniconnect_auth.extensions.Extensions.toast
-import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.register
 import kotlinx.android.synthetic.main.activity_create_account.*
+
+/**
+ * this file implemented by Tahmidul
+ *
+ */
 
 class CreateAccountActivity : AppCompatActivity() {
     lateinit var createAccountInputsArray: Array<EditText>
@@ -33,8 +37,7 @@ class CreateAccountActivity : AppCompatActivity() {
                         startActivity(Intent(this, HomeActivity::class.java))
                         toast("registered successfully")
                         finish()
-                    }
-                    else {
+                    } else {
                         toast("registration failed")
                     }
                 }
@@ -62,7 +65,6 @@ class CreateAccountActivity : AppCompatActivity() {
         }
         return identical
     }
-
 
 
     /* send verification email to the new user. This will only

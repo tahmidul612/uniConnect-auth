@@ -10,6 +10,11 @@ import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils.login
 /** fix missing imports **/
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
+/**
+ * this file implemented by Tahmidul
+ *
+ */
+
 class SignInActivity : AppCompatActivity() {
     lateinit var signInInputsArray: Array<EditText>
 

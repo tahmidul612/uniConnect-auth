@@ -6,11 +6,15 @@ import com.google.firebase.firestore.DocumentReference
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 
 /**
+ *  this file implemented by Craig
+ */
+
+/**
  * An object representing a chatroom.
  *
  * @property docRef Document Reference to this chatroom in Firestore.
  */
-data class Chatroom(val docRef : DocumentReference? = null) {
+data class Chatroom(val docRef: DocumentReference? = null) {
 
     /**
      * send a message to this chat

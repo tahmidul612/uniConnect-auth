@@ -12,6 +12,10 @@ import com.lakeheadu.uniconnect_auth.R
 import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 import kotlinx.android.synthetic.main.chatrooms.view.*
 
+/**
+ *  this file implemented by Tahmidul, which some help from Craig
+ */
+
 val list_of_chatrooms = mutableListOf<Chatroom>()
 
 class ChatroomsAdapter(list: List<Chatroom>) :

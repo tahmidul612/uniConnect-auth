@@ -7,6 +7,10 @@ import com.lakeheadu.uniconnect_auth.utils.FirebaseUtils
 import java.util.*
 
 /**
+ *  this file implemented by Craig
+ */
+
+/**
  * represents a request from user to another to join a chat
  *
  * @property docRef Self-referential document reference (type chatRequest)

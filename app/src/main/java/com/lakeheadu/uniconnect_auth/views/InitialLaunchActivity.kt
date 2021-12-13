@@ -1,10 +1,15 @@
 package com.lakeheadu.uniconnect_auth.views
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.lakeheadu.uniconnect_auth.R
 import kotlinx.android.synthetic.main.activity_initial_launch.*
+
+/**
+ * this file implemented by Tahmidul
+ *
+ */
 
 class InitialLaunchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
