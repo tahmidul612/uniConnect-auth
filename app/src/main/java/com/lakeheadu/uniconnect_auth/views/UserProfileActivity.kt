@@ -32,13 +32,14 @@ class UserProfileActivity : AppCompatActivity() {
             val lastName = et_last_name.text.toString().trim { it <= ' ' }
             val displayName = et_displayname.text.toString()
             val department = et_department.text.toString()
-
+            val email = et_email.text.toString()
 
             // do this instead of calling update_ methods so we don't make multiple requests
             it.firstName = firstName
             it.lastName = lastName
             it.displayName = displayName
             it.department = department
+            it.email = email
             it.update()
         }
     }

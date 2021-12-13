@@ -78,15 +78,7 @@ data class User(
 ) {
 
 
-    fun updateFirstName(new_name: String) {
-        firstName = new_name
-        update()
-    }
 
-    fun updateLastName(new_name: String) {
-        lastName = new_name
-        update()
-    }
 
     /**
      * updates the name of this user and writes to Firestore
